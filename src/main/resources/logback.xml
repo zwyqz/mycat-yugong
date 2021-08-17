@@ -1,0 +1,144 @@
+<configuration scan="true" scanPeriod=" 5 seconds">
+    <jmxConfigurator/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="com.taobao.yugong.common.utils.ConsoleFilter"/>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{56} - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="YUGONG-ROOT" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>table</Key>
+            <DefaultValue>yugong</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${table}" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>logs/${table}/table.log</File>
+                <rollingPolicy
+                        class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- rollover daily -->
+                    <fileNamePattern>
+                        logs/${table}/%d{yyyy-MM-dd}/table-%d{yyyy-MM-dd}-%i.log.gz
+                    </fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy
+                            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <!-- or whenever the file size reaches 100MB -->
+                        <maxFileSize>512MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>
+                        %d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{56} - %msg%n
+                    </pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="EXTRACTOR_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>table</Key>
+            <DefaultValue>yugong</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="EXTRACTOR_LOG_${table}"
+                      class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>logs/${table}/extractor.log</File>
+                <rollingPolicy
+                        class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- rollover daily -->
+                    <fileNamePattern>
+                        logs/${table}/%d{yyyy-MM-dd}/extractor-%d{yyyy-MM-dd}-%i.log.gz
+                    </fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy
+                            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>512MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>%msg</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="APPLIER_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>table</Key>
+            <DefaultValue>yugong</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="APPLIER_LOG_${table}"
+                      class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>logs/${table}/applier.log</File>
+                <rollingPolicy
+                        class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- rollover daily -->
+                    <fileNamePattern>
+                        logs/${table}/%d{yyyy-MM-dd}/applier-%d{yyyy-MM-dd}-%i.log.gz
+                    </fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy
+                            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>512MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>%msg</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <appender name="CHECK_LOG" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>table</Key>
+            <DefaultValue>yugong</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="CHECK_LOG_${table}"
+                      class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>logs/${table}/check.log</File>
+                <rollingPolicy
+                        class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <!-- rollover daily -->
+                    <fileNamePattern>
+                        logs/${table}/%d{yyyy-MM-dd}/check-%d{yyyy-MM-dd}-%i.log.gz
+                    </fileNamePattern>
+                    <timeBasedFileNamingAndTriggeringPolicy
+                            class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                        <maxFileSize>512MB</maxFileSize>
+                    </timeBasedFileNamingAndTriggeringPolicy>
+                    <maxHistory>60</maxHistory>
+                </rollingPolicy>
+                <encoder>
+                    <pattern>%msg</pattern>
+                </encoder>
+            </appender>
+        </sift>
+    </appender>
+
+    <logger name="extractor" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="EXTRACTOR_LOG"/>
+    </logger>
+
+    <logger name="applier" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="APPLIER_LOG"/>
+    </logger>
+
+    <logger name="check" additivity="false">
+        <level value="INFO"/>
+        <appender-ref ref="CHECK_LOG"/>
+    </logger>
+
+    <root level="DEBUG">
+        <appender-ref ref="YUGONG-ROOT"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>

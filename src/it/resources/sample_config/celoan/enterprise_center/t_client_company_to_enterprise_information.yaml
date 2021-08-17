@@ -1,0 +1,115 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: dev_enterprise_center
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_client_company:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: ec_enterprise_information
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          include_columns:
+            - id
+            - business_licence
+            - name
+            - code
+            - address
+            - province
+            - city
+            - area
+            - industry_type
+#            - com_source #todo 进一步做映射
+            - com_tags
+            - rbstate
+            - business_time_type
+            - business_time
+            - business_scope
+            - authtime
+            - is_name_check
+            - isauth
+            - open_bank
+            - face_verify
+            - lep_verify
+            - card_verify
+            - state_edit
+          column_alias:
+            business_licence:
+              - licence_file_id
+            name:
+              - enterprise_name
+            code:
+              - credit_code
+            address:
+              - legal_address
+            province:
+              - province_name
+            city:
+              - city_name
+            area:
+              - area_name
+            industry_type:
+              - industry
+#            com_source:
+#              - source
+            com_tags:
+              - enterprise_label
+            rbstate:
+              - red_black_list
+            business_time_type:
+              - business_term_type
+            business_time:
+              - business_term_end
+            business_scope:
+              - business_scope
+            authtime:
+              - authentication_time
+            is_name_check:
+              - real_name_flag
+            open_bank:
+              - deposit_bank
+            state_edit:
+              - examine_result
+          new_columns:
+            create_time:
+              type: 91
+              value: 2020-09-14 17:00:52
+            deleted:
+              type: 12
+              value: 0
+      - class: com.taobao.yugong.translator.celoan.EnterpriseInformationDataTranslator
+

@@ -1,0 +1,108 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: dev_enterprise_center
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_client_financing:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: ec_enterprise_financing_info
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          include_columns:
+            - id
+            - amount
+            - orientation
+            - maturity
+            - rate
+            - guarantee_mode_type
+            - expect_loan_arrive_time
+            - is_profit
+            - business_amount
+            - pay_grade
+            - pay_amount
+            - loan_banks
+            - cur_loan_balance
+            - is_collateral
+            - reasons
+            - advisor
+            - guarantee_mode_type
+            - payment_type
+          column_alias:
+            amount:
+              - apply_amount_min
+            orientation:
+              - orientation
+            maturity:
+              - maturity_max
+            rate:
+              - rate_max
+            guarantee_mode_type:
+              - guarantee_type
+            payment_type:
+              - repayment_type
+            expect_loan_arrive_time:
+              - arrival_time_type
+            is_profit:
+              - profit_state
+            business_amount:
+              - income_data
+            pay_grade:
+              - tax_level
+            pay_amount:
+              - tax_amount
+            loan_banks:
+              - loan_bank_name
+            cur_loan_balance:
+              - loan_left_amount
+            is_collateral:
+              - collateral_flag
+            reasons:
+              - reason
+          new_columns:
+            create_time:
+              type: 91
+              value: 2020-09-14 17:00:52
+            deleted:
+              type: 12
+              value: 0
+#      - class: com.taobao.yugong.translator.celoan.IdAddDataTranslator
+#        properties:
+#          id_add_prefix: 1000
+#          name: advisor
+      - class: com.taobao.yugong.translator.celoan.EnterpriseFinancingInfoDataTranslator
+

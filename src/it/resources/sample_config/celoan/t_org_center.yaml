@@ -1,0 +1,110 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: dev_organization_center
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_org_organization:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: biz_organization
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          include_columns:
+            - id
+            - pid
+            - org_type
+            - level_type
+            - name
+            - short_name
+            - logo
+            - long_logo
+            - description
+            - isdomain
+            - service_area
+            - province
+            - city
+            - area
+            - address
+            - isrec
+            - ishot
+            - status
+            - sort
+            - creator
+            - createtime
+            - lasteditor
+            - lastedittime
+            - isdel
+          column_alias:
+            pid:
+              - parent_id
+            level_type:
+              - level
+            name:
+              -  org_name
+            long_logo:
+              - recommend_logo
+            description:
+              - introduction
+            isdomain:
+              - national
+            service_area:
+              - national_code
+            province:
+              - province
+            city:
+              - city
+            area:
+              - district
+            isrec:
+              - recommend
+            ishot:
+              - top
+            creator:
+              - create_by
+            createtime:
+              - create_time
+            lasteditor:
+              - update_by
+            lastedittime:
+              - update_time
+            isdel:
+              - deleted
+          new_columns:
+            version:
+              type: 12
+              value : 1.0
+      - class: com.taobao.yugong.translator.ClientOrganizationDataTranslator

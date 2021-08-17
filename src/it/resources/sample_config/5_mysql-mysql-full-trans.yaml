@@ -1,0 +1,49 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: db2
+    fenpian:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: fenpian2
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+#          column_alias:
+#            headimgurl:
+#              - head_url
+#            joindate:
+#              - create_time
+          exclude_columns:
+#            - timestamp
+            - blob
+            - fee
+

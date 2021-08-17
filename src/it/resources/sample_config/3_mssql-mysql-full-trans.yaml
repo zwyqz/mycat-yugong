@@ -1,0 +1,112 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: db2
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_client_users:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: sys_user
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          column_alias:
+            headimgurl:
+              - head_url
+            joindate:
+              - create_time
+            status:
+              -  enabled
+            area:
+              - county
+            sex:
+              - gender
+          exclude_columns:
+#            - id
+            - timestamp
+            - _physloc_pk
+            - id
+            - guid
+            - comid
+            - roleid
+            - casid
+#            - username
+#            - password
+#            - mobile
+#            - nickname
+            - realname
+#            - headimgurl
+#            - sex
+            - unit
+            - tel
+            - depart
+            - job
+#            - province
+#            - city
+#            - area
+            - fromsource
+            - isverify
+            - verifytime
+            - isauth
+            - authtime
+            - cardtype
+            - cardname
+            - cardcode
+            - cardtimetype
+            - cardtime
+            - card_urla_file
+            - card_urlb_file
+            - im_sign
+            - im_state
+#            - remark
+            - failNum
+            - fail_num
+            - issynchro
+#            - status
+            - isdel
+#            - joindate
+            - joinip
+            - lastvisit
+            - lastip
+            - sso_uuid
+            - sso_bind_status
+            - sso_bind_date
+            - sso_token
+            - sso_refresh_token
+      - class: com.taobao.yugong.translator.ClientUsersDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+

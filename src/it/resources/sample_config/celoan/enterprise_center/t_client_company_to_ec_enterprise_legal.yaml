@@ -1,0 +1,88 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: dev_enterprise_center
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_client_company:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: ec_enterprise_legal
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          include_columns:
+            - id
+            - code
+            - lep_name
+            - lep_cardtype
+            - lep_code
+            - lep_cardtimetype
+            - lep_cardtime
+            - lep_urla_file
+            - lep_urlb_file
+            - face_auth_img
+            - certificate
+          column_alias:
+            code:
+              - credit_code
+            lep_name:
+              - name
+            lep_cardtype:
+              - card_type
+            lep_code:
+              - id_card #加密字段
+            lep_cardtimetype:
+              - term_type
+            lep_cardtime:
+              - card_end_date
+            lep_urla_file:
+              - urla_file_id
+            lep_urlb_file:
+              - urlb_file_id
+            face_auth_img:
+              - face_file_id
+            certificate:
+              - authorize_file_id
+          new_columns:
+            create_time:
+              type: 91
+              value: 2020-09-14 17:00:52
+            deleted:
+              type: 12
+              value: 0
+      - class: com.taobao.yugong.translator.celoan.ClientCompanyToEnterpriseLegalDataTranslator
+
+

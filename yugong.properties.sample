@@ -1,0 +1,58 @@
+yugong.database.source.username=test
+yugong.database.source.password=test
+yugong.database.source.type=ORACLE
+yugong.database.source.url=jdbc:oracle:thin:@127.0.0.1:1521:test
+yugong.database.source.encode=UTF-8
+yugong.database.source.poolSize=30
+yugong.database.target.url=jdbc:mysql://127.0.0.1:3306/test
+yugong.database.target.username=test 
+yugong.database.target.password=test
+yugong.database.target.type=DRDS
+yugong.database.target.encode=UTF-8
+yugong.database.target.poolSize=30
+yugong.table.batchApply=true
+yugong.table.onceCrawNum=1000
+yugong.table.tpsLimit=0
+# use connection default schema
+yugong.table.ignoreSchema=false
+# skip Applier Load Db failed data
+yugong.table.skipApplierException=false
+#yugong.table.white=yugong_example_join,yugong_example_oracle,yugong_example_two
+yugong.table.white=yugong_example_oracle
+yugong.table.black=
+# tables use multi-thread enable or disable
+yugong.table.concurrent.enable=true
+# tables use multi-thread size
+yugong.table.concurrent.size=5
+# retry times 
+yugong.table.retry.times=3
+# retry interval or sleep time (ms)
+yugong.table.retry.interval=1000
+# MARK/FULL/INC/ALL(REC+FULL+INC)/CHECK/CLEAR
+yugong.table.mode=ALL
+# yugong extractor
+yugong.extractor.dump=false
+yugong.extractor.concurrent.enable=true
+yugong.extractor.concurrent.global=false
+yugong.extractor.concurrent.size=30
+yugong.extractor.noupdate.sleep=1000
+yugong.extractor.noupdate.thresold=0
+yugong.extractor.once=false
+# {0} is all columns , {1}.{2} is schemaName.tableName , {3} is primaryKey
+#yugong.extractor.sql=select /*+parallel(t)*/ {0} from {1}.{2} t
+#yugong.extractor.sql=select * from (select {0} from {1}.{2} t where {3} > ? order by {3} asc) where rownum <= ?
+# yugong applier
+yugong.applier.concurrent.enable=true
+yugong.applier.concurrent.global=false
+yugong.applier.concurrent.size=30
+yugong.applier.dump=false
+# stats
+yugong.stat.print.interval=5
+yugong.progress.print.interval=1
+# alarm email
+yugong.alarm.email.host=smtp.163.com
+yugong.alarm.email.username=test@163.com
+yugong.alarm.email.password=
+yugong.alarm.email.stmp.port = 465
+yugong.alarm.email.ssl.support=true
+yugong.alarm.receiver=test@163.com

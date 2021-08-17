@@ -1,0 +1,90 @@
+databases:
+  source:
+    schema:
+  target:
+    schema:
+table:
+  a: todo
+  b: todo
+extractor:
+  a: todo
+  b: todo
+appiler:
+  a: todo
+  b: todo
+translators:
+  table:
+    '*':
+      - class: com.taobao.yugong.translator.NameTableMetaTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+    ProductProperty: []
+  record:
+    '|BEFORE|':
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          column_case_format_from: UPPER_CAMEL
+          column_case_format_to: LOWER_UNDERSCORE
+          table_case_format_from: UPPER_CAMEL
+          table_case_format_to: LOWER_UNDERSCORE
+          schema_to: dev_system_center
+      #- class: com.taobao.yugong.translator.ColumnFixDataTranslator
+      #  properties:
+      #    column_replace:
+      - class: com.taobao.yugong.translator.DictDataTranslator
+        properties:
+          dict_center_database: dev_dict_center
+    t_base_users:
+      - class: com.taobao.yugong.translator.NameStyleDataTranslator
+        properties:
+          table_to: sys_user
+      - class: com.taobao.yugong.translator.ColumnFixDataTranslator
+        properties:
+          include_columns:
+            - id
+            - nickname
+            - username
+            - email
+            - password
+            - mobile
+            - privince
+            - city
+            - area
+            - sex
+            - thumb
+            - iswork
+            - status
+            - joindate
+            - creator
+            - remark
+          column_alias:
+            thumb:
+              - head_url
+            joindate:
+              - create_time
+            status:
+              -  enabled
+            area:
+              - county
+            sex:
+              - gender
+            privince:
+              - province
+            iswork:
+              - work_status
+            creator:
+              - create_by
+          new_columns:
+            user_type:
+              type: 12 #int
+              value: 3
+          default_columns:
+            work_status :
+                  value : 1
+      - class: com.taobao.yugong.translator.ClientUsersDataTranslator
+        properties:
+          id_add_prefix: 1000
+
