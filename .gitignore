@@ -60,7 +60,7 @@ package-info.java
 .DS_Store
 src/it/resources/it.properties
 logs
-conf
+#conf
 /*.yaml
 /*.properties
 positioner_data
